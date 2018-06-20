@@ -1,6 +1,9 @@
 'use strict'
 var nodemailer = require('nodemailer');
 var SendUserVerifyMail = function(to,subject,html,cb){
+
+
+
     let mailOptions = {
         from: 'om@hcl.com',
         to: to, // list of receivers
@@ -21,16 +24,26 @@ var SendMail=function(mailOptions,cb){
 nodemailer.createTestAccount(function(err, account){
 
     // create reusable transporter object using the default SMTP transport
-    let transporter = nodemailer.createTransport({
-        host: 'smtp.vstglobal.com',
+    // let transporter = nodemailer.createTransport({
+    //     host: 'smtp.vstglobal.com',
+    //     port: 587,
+    //     secure: false, // true for 465, false for other ports
+    //     tls: {
+    //         rejectUnauthorized: false
+    //     },
+    //     auth: {
+    //         user: 'om@vstglobal.com', // generated ethereal user
+    //         pass: 'Network2018*'  // generated ethereal password
+    //     }
+    // });
+
+
+    const transporter = nodemailer.createTransport({
+        host: 'smtp.ethereal.email',
         port: 587,
-        secure: false, // true for 465, false for other ports
-        tls: {
-            rejectUnauthorized: false
-        },
         auth: {
-            user: 'om@vstglobal.com', // generated ethereal user
-            pass: 'Network2018*'  // generated ethereal password
+            user: 'fzrlmi5jiao2fb5o@ethereal.email',
+            pass: 'etUG9GCUqscQ2YTyNY'
         }
     });
 

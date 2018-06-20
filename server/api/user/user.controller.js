@@ -23,25 +23,10 @@ exports.index = function(req, res) {
     res.status(200).json(users);
   });
 };
-
-
 exports.verified=function(req,res){
-
-
   User.update({'verification_token':req.params.id},{$set:{verified:true}},function(err,result){
-
     res.status(200).json(result);
   });
-
-
-  // User.find({'verification_token':req.params.id},function(err,result){
-
-   
-  // })
-
-  
-  // res.status(200).json({"text":"verified successfully",
-  //    "code":req.params.id});
 }
 
 /**
@@ -53,20 +38,18 @@ exports.create = function (req, res, next) {
   var newUser = new User(req.body);
   newUser.provider = 'local';
   newUser.save(function(err, user) {
-    console.log("err...",err);
-    console.log("user...",user);
-    // SendUserVerifyMail
-
     
-    var html='<a href="http://localhost:8087/api/users/verify/email/'+user.verification_token+'">CLick here to verify</a>';
+    if (err) return validationError(res, err);
 
+    var html='http://localhost:8085/api/users/verify/email/'+user.verification_token+'';
+    // var html='<a href="http://localhost:8087/api/users/verify/email/'+user.verification_token+'">CLick here to verify</a>';
     Email.SendUserVerifyMail(user.email,'Verify email',html,function(err,result){
 
       console.log("errr....",err);
       console.log("result....",result);
     })
-    if (err) return validationError(res, err);
-    res.status(200).send({message:'Account has been successfully genrated. Please check your email for account verification'});
+  
+    res.status(200).send({message:'Account has been successfully genrated. Please check your email for account verification','verificationLink':html});
   });
 };
 

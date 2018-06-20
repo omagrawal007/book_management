@@ -16,9 +16,6 @@ module.exports = {
 
   // MongoDB connection options
   mongo: {
-    uri:    process.env.MONGOLAB_URI ||
-            process.env.MONGOHQ_URL ||
-            process.env.OPENSHIFT_MONGODB_DB_URL+process.env.OPENSHIFT_APP_NAME ||
-            'mongodb://test:test@ds143738.mlab.com:43738/timesheet1231'
+    uri: 'mongodb://b_management:b12345@ds163330.mlab.com:63330/b_management'
   }
 };
