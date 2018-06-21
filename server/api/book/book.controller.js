@@ -44,6 +44,16 @@ exports.index = function(req, res) {
   // })
 };
 
+// Get list of book
+exports.search = function(req, res) {
+
+  console.log(req.query);
+  book.find({$or:[{"book_name":req.query.book_name},{"auth_name":req.query.auth_name}]},  function (err, book) {
+    if(err) return res.status(500).send(err);
+    res.status(200).json(book);
+  });
+};
+
 // Get a single book
 exports.show = function(req, res) {
   book.findById(req.params.id, function (err, doc) {
@@ -52,6 +62,13 @@ exports.show = function(req, res) {
     return res.json(doc);
   });
 };
+
+//Approve Book
+exports.verified=function(req,res){
+  book.update({'_id':req.params.id},{$set:{approve:true}},function(err,result){
+    res.status(200).json(result);
+  });
+}
 
 // Creates a new Project in the DB.
 exports.create = function(req, res) {

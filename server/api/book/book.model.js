@@ -1,13 +1,13 @@
 'use strict';
 
-var mongoose = require('mongoose'),
-    Schema = mongoose.Schema;
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-	var bookSchema = new Schema({
-		book_id : {type:mongoose.Schema.Types.ObjectId},
+const book = new Schema({
 		cat_id : {
-			type:mongoose.Schema.Types.ObjectId,
-			ref: 'book_user'
+			type: mongoose.Schema.ObjectId,
+			ref: 'book_category',
+			required:true
 		},
 		book_name : {
 			type:String,
@@ -19,7 +19,8 @@ var mongoose = require('mongoose'),
 		},
 		owner : {
 			type: mongoose.Schema.ObjectId,
-			ref: 'book_user'
+			ref: 'book_user',
+			required:true
 		},
 		availibility :{
 			type:Boolean,
@@ -38,16 +39,16 @@ var mongoose = require('mongoose'),
 		},
 		approve :{
 			type:Boolean,
-			default:true
+			default:false
 		},
 		rating : {
 			type:Number,
-			required:true
+			default:5
 		},
-		request_id : {type:mongoose.Schema.Types.ObjectId}
-	});  
-	
-			type: mongoose.Schema.ObjectId,
-			
-			module.export = mongoose.model('book',bookSchema); 
-	
+		request_id : {type:String} 
+},
+{ 
+    collection : "book" ,timestamp:true
+});
+
+module.exports = mongoose.model('book', book);
